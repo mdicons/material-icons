@@ -2,7 +2,7 @@
     "name": "material-icons",
     "displayName": "Material Icons Library",
     "description": "Insert material icons straight into your code",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "license": "MIT",
     "publisher": "Archety",
     "icon": "images/icon.png",
@@ -48,7 +48,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/Archety/material-icons-library.git"
+        "url": "https://github.com/Archety/material-icons.git"
     },
-    "homepage": "https://github.com/Archety/material-icons-library/blob/master/README.md"
+    "homepage": "https://github.com/Archety/material-icons/blob/master/README.md"
 }
