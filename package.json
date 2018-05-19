@@ -1,0 +1,54 @@
+{
+    "name": "material-icons",
+    "displayName": "Material Icons Library",
+    "description": "Insert material icons straight into your code",
+    "version": "0.0.1",
+    "license": "MIT",
+    "publisher": "Archety",
+    "icon": "images/icon.png",
+    "engines": {
+        "vscode": "^1.20.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:materialIcons.showLibrary"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "materialIcons.showLibrary",
+                "title": "Show Icons Library"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "materialIcons.showLibrary",
+                "key": "ctrl+alt+i",
+                "when": "editorTextFocus"
+            }
+        ]
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^7.0.63",
+        "eslint": "^4.11.0",
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.17"
+    },
+    "dependencies": {
+        "request": "^2.86.0",
+        "yauzl": "^2.9.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Archety/material-icons-library.git"
+    },
+    "homepage": "https://github.com/Archety/material-icons-library/blob/master/README.md"
+}

@@ -1,0 +1,86 @@
+.mdi--icon {
+    width: 100%;
+
+    display: block;
+    float: left;
+
+    height: 48px;
+
+    /* width: 132px; */
+    /* height: 132px; */
+    box-sizing: border-box;
+
+    border-radius: 2px;
+
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+}
+@media only screen and (min-width: 480px)
+{
+    .mdi--icon {
+        width: 50%;
+    }
+}
+@media only screen and (min-width: 720px)
+{
+    .mdi--icon {
+        width: 33.333%;
+    }
+}
+@media only screen and (min-width: 960px)
+{
+    .mdi--icon {
+        width: 25%;
+    }
+}
+.mdi--icon:hover {
+    background-color: rgba(0,0,0,0.08);
+}
+    .mdi--icon--link {
+        width: calc(100% - 56px);
+        display: block;
+        float: left;
+
+        cursor: pointer;
+    }
+        .mdi--icon--preview {
+            fill: rgba(255, 255, 255, 0.87);
+            
+            width: 24px;
+            height: 24px;
+
+            padding: 12px 16px;
+            float: left;
+            pointer-events: none;
+        }
+        .mdi--icon--caption {
+            font-size: 12px;
+            line-height: 24px;
+            padding: 12px 0;
+            margin: 0;
+
+            box-sizing: border-box;
+            width: calc(100% - 56px);
+            float: left;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            text-decoration: none !important;
+            text-decoration-line: none !important;
+            color: rgba(255, 255, 255, 0.87);
+            pointer-events: none;
+        }
+    .mdi--icon--bookmark {
+        float: right;
+        display: none;
+        margin: 12px 16px;
+
+        width: 16px;
+        height: 16px;
+        padding: 4px;
+
+        fill: rgba(255, 255, 255, 0.24);
+        cursor: pointer;
+    }

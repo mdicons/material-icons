@@ -1,0 +1,95 @@
+<style>
+        .load {
+            width: 100%;
+            height: 100vh;
+    
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+    
+            text-align: center;
+        }
+    
+        .load h1 {
+            margin: 8px;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+        .load p {
+            margin: 8px;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        .loader {
+            width: 96px;
+            height: 96px;
+            animation: loader-rotate 2s cubic-bezier(.56,.32,.41,.65) infinite;
+            display: inline-block;
+            fill: #B71C1C;
+        }
+        .circle {
+            stroke-dasharray: 24;
+            stroke-dashoffset: 25;
+            animation: loader-dash 2s ease-in-out infinite;
+            stroke-width: 2px;
+            stroke: #0277BD;
+            fill: transparent;
+        }
+        @keyframes loader-dash {
+            0% {
+                stroke-dasharray: 8, 48.5486677646;
+                stroke-dashoffset: 4;
+                animation-timing-function: cubic-bezier(.54,.05,1,1);
+                /* animation-timing-function: ease-in; */
+            }
+            50% {
+                stroke-dasharray: 44.5486677646, 12;
+                stroke-dashoffset: -4;
+                animation-timing-function: cubic-bezier(.27,.41,.55,.95);
+                /* animation-timing-function: ease-out; */
+            }
+            100% {
+                stroke-dasharray: 8, 48.5486677646;
+                stroke-dashoffset: -52.5486677646;
+            }
+        }
+        @keyframes loader-rotate {
+            0% {
+                transform: rotateZ(-100deg);            
+            }
+            100% {
+                transform: rotateZ(260deg);
+            }
+        }
+
+    </style>
+    <div class="load">
+            <svg class="loader" viewBox="0 0 24 24">
+                <circle class="circle" cx="12" cy="12" r="9"></circle>
+            </svg>
+        <h1 id="header">
+            WORKING...
+        </h1>
+        <p>
+            <span id="task">processed</span><br>
+            Please wait.<br>
+        </p>
+    </div>
+    <script>
+        /*script*/
+    
+        tasks =
+        {
+            DOWNLOADING: "Downloading the latest icon pack from Google repository",
+            EXTRACTING: "Converting icons to JSON file"
+        }
+    
+        if(state && state.info)
+        {
+            document.getElementById("header").innerHTML = state.info;
+            document.getElementById("task").innerHTML = tasks[state.info];
+        }
+    </script>
+    
