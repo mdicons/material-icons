@@ -2,7 +2,7 @@
     "name": "material-icons",
     "displayName": "Material Icons Library",
     "description": "Insert material icons straight into your code",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "license": "MIT",
     "publisher": "Archety",
     "icon": "images/icon.png",
