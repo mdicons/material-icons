@@ -2,8 +2,17 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-#Added
-- Button for copying icon source to clipboard
+- Rewrite the entire extension into the typecript language
+
+## [0.0.4] - 2018-05-23 
+### Added
+- Button to copy icon source into clipboard
+- Settings to:
+    * define svg `classList`
+    * enable `xmlns` attribute
+
+### Fixed
+- Empty file without permissions occuring when the download fails
 
 ## [0.0.3] - 2018-05-20
 ### Added
