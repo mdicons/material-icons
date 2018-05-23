@@ -144,9 +144,11 @@ var library =
             (progress, token) =>
             {   
                 let cancelled = false;
-
+                
                 let p = new Promise((resolve, reject) =>
                 {
+                    let stream = fs.createWriteStream(`${this.directory}/data/raw.zip`);
+
                     let length;
                     let displayLength;
                     let current = 0;
@@ -176,8 +178,12 @@ var library =
                             }
                         })
                         .on('end', resolve.bind(this))
-                        .on('error', reject.bind(this))
-                        .pipe(fs.createWriteStream(`${this.directory}/data/raw.zip`))
+                        .on('error', (e) => 
+                        {
+                            stream.end();
+                            reject(e);
+                        })
+                        .pipe(stream)
 
                     token.onCancellationRequested(() => {
                         cancelled = true;
@@ -187,12 +193,22 @@ var library =
                 p.then(() =>
                 {
                     this.state.task = 0;
-                    cancelled ?
-                        this.reload():
+                    if(cancelled)
+                    {
+                        console.log("yep")
+                        if(fs.existsSync(`${this.directory}/data/raw.zip`)) 
+                            fs.unlinkSync(`${this.directory}/data/raw.zip`);
+                        this.reload()
+                    }
+                    else
+                    {
                         this.extract();
+                    }
                 });
                 p.catch(() => 
                 {
+                    if(fs.existsSync(`${this.directory}/data/raw.zip`)) 
+                        fs.unlinkSync(`${this.directory}/data/raw.zip`);
                     this.state.task = 0;
                     this.state.template = "ERROR";
                     this.state.info = "DOWNLOADING";
@@ -277,7 +293,6 @@ var library =
                             fs.writeFileSync(`${this.directory}/data/icons.json`, JSON.stringify(data));
                             resolve(); 
                         });
-    
                     });
                 });
                 p.then(() =>
@@ -285,8 +300,11 @@ var library =
                     this.state.task = 0;
                     this.parse();
                 })
-                .catch(() =>
+                .catch((e) =>
                 {
+                    console.log(e);
+                    if(fs.existsSync(`${this.directory}/data/icons.json`)) 
+                        fs.unlinkSync(`${this.directory}/data/icons.json`);
                     this.state.task = 0;
                     this.state.template = "ERROR";
                     this.state.info = "EXTRACTING";
