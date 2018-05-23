@@ -327,11 +327,15 @@ var library =
                             ${niceName}
                         </p>
                     </a>
-                    <svg class="mdi--icon--bookmark" viewBox="0 0 24 24">
-                        <path class="true" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                        <path class="false" d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/>
-                    </svg>
-                    </a>
+                    <div class="mdi--icon--actions">
+                        <svg class="mdi--icon--action mdi--icon--bookmark" viewBox="0 0 24 24">
+                            <path class="true" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                            <path class="false" d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/>
+                        </svg>
+                        <svg class="mdi--icon--action mdi--icon--clone" viewBox="0 0 24 24">
+                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                        </svg>
+                    </div>
                 </div>
                 `;
             }
@@ -399,6 +403,23 @@ var library =
     changeBookmarksView(visible)
     {
         this.state.bookmarks = Boolean(visible);
+    },
+    copySource(cat, icon)
+    {
+        let copy = this.editor.selections;
+        this.editor.selections = [this.editor.selection];
+
+        let source = this.data[cat][icon];
+        this.editor.edit(edit =>
+        {
+            edit.replace(this.editor.selection, source);
+        });
+        
+        vscode.window.showTextDocument(this.editor.document.uri);
+        vscode.commands.executeCommand('editor.action.clipboardCopyAction');
+        vscode.commands.executeCommand('undo');
+        vscode.window.showInformationMessage(`[ ${icon.replace(/_/g, " ")} ] - copied to clipboard`);
+        this.editor.selections = copy;
     },
 
     dispatchEvent(fun, args)

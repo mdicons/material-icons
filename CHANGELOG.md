@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+#Added
+- Button for copying icon source to clipboard
 
 ## [0.0.3] - 2018-05-20
 ### Added

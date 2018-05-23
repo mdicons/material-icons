@@ -37,7 +37,7 @@
     background-color: rgba(0,0,0,0.08);
 }
     .mdi--icon--link {
-        width: calc(100% - 56px);
+        width: calc(100% - 72px);
         display: block;
         float: left;
 
@@ -72,14 +72,18 @@
             color: rgba(255, 255, 255, 0.87);
             pointer-events: none;
         }
-    .mdi--icon--bookmark {
+    .mdi--icon--actions {
         float: right;
+        padding: 8px 8px 8px 0;
+        width: 64px;
+    }
+    .mdi--icon--action {
         display: none;
-        margin: 12px 16px;
+        float: right;
 
         width: 16px;
         height: 16px;
-        padding: 4px;
+        padding: 8px;
 
         fill: rgba(255, 255, 255, 0.24);
         cursor: pointer;

@@ -42,13 +42,13 @@
         display: none;
     }
         .mdi--icon.checked .mdi--icon--bookmark,
-        .mdi--icon:hover .mdi--icon--bookmark {
+        .mdi--icon:hover .mdi--icon--action {
             display: block;
         }
-        .mdi--icon--bookmark:hover {
+        .mdi--icon--action:hover {
             fill: rgba(255, 255, 255, 0.87);
         }
-            .mdi--icon--bookmark * {
+            .mdi--icon--action * {
                 pointer-events: none;
             }
         
@@ -300,11 +300,15 @@
         {
             if(e.target.classList.contains("mdi--icon--bookmark"))
             {
-                let i = e.target.parentNode;
+                let i = e.target.parentNode.parentNode;
                 i.classList.toggle("checked");
                 command.dispatch("setBookmark", [i.dataset.name, i.dataset.category, i.classList.contains("checked")]);
                 hideUnused();
-
+            }
+            if(e.target.classList.contains("mdi--icon--clone"))
+            {
+                let i = e.target.parentNode.parentNode;
+                command.dispatch("copySource", [i.dataset.category, i.dataset.name]);
             }
             if(e.target.classList.contains("mdi--bookmark"))
             {
