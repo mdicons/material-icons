@@ -17,6 +17,22 @@
     ],
     "main": "./extension.js",
     "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "MD Library configuration",
+            "properties": {
+                "material-icons.classList": {
+                    "type": "string",
+                    "default": "material-icon",
+                    "description": "Defines classes of newly inserted svgs"
+                },
+                "material-icons.includeXmlns": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Choose whether the xmlns attribute should be included"
+                }
+            }
+        },
         "commands": [
             {
                 "command": "materialIcons.showLibrary",

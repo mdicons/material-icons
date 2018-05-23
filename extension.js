@@ -378,10 +378,11 @@ var library =
             });
             if(insertions.length)
             {
+                let settings = vscode.workspace.getConfiguration('material-icons');
                 this.editor.insertSnippet(
                     new vscode.SnippetString(
-                        `<svg class="material-icon$1" viewBox="0 0 24 24">\n\t${source}\n</svg>`), 
-                    insertions);
+                        `<svg class="${settings.classList}" viewBox="0 0 24 24"${settings.includeXmlns ? ' xmlns="http://www.w3.org/2000/svg"' : ''}>\n\t${source}\n</svg>`),
+                        insertions);
             }
         }
         vscode.window.showTextDocument(this.editor.document.uri);
@@ -406,13 +407,18 @@ var library =
     },
     copySource(cat, icon)
     {
+        let settings = vscode.workspace.getConfiguration('material-icons');
+
         let copy = this.editor.selections;
         this.editor.selections = [this.editor.selection];
 
         let source = this.data[cat][icon];
         this.editor.edit(edit =>
         {
-            edit.replace(this.editor.selection, source);
+            edit.replace(
+                this.editor.selection, 
+                `<svg class="${settings.classList}" viewBox="0 0 24 24"${settings.includeXmlns ? ' xmlns="http://www.w3.org/2000/svg"' : ''}>\n\t${source}\n</svg>`
+            );  
         });
         
         vscode.window.showTextDocument(this.editor.document.uri);
