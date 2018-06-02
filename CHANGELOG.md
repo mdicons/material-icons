@@ -2,7 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-- Rewrite the entire extension into the typecript language
+
+## [0.1.0] - 2018-06-02 
+- Migrate to TypeScript
+- Move loading bar from `ProgressLocation.Notification` to `ProgressLocation.Window` until the former starts working correctly
 
 ## [0.0.4] - 2018-05-23 
 ### Added
