@@ -70,26 +70,10 @@
                 <circle class="circle" cx="12" cy="12" r="9"></circle>
             </svg>
         <h1 id="header">
-            WORKING...
+            {{header}}
         </h1>
         <p>
-            <span id="task">processed</span><br>
-            Please wait.<br>
+            {{title}}
         </p>
     </div>
-    <script>
-        /*script*/
-    
-        tasks =
-        {
-            DOWNLOADING: "Downloading the latest icon pack from Google repository",
-            EXTRACTING: "Converting icons to JSON file"
-        }
-    
-        if(state && state.info)
-        {
-            document.getElementById("header").innerHTML = state.info;
-            document.getElementById("task").innerHTML = tasks[state.info];
-        }
-    </script>
     
