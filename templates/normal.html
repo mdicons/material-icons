@@ -21,7 +21,7 @@
         clear: both;
     }
     
-    /*style*/
+    {{style}}
 
     .mdi--container.hidden {
         display: none;
@@ -199,6 +199,12 @@
             .bookmarks-only .mdi--bookmark::after {
                 content: "Bookmarks only"
             }
+            .bookmarks-only .mdi--bookmark .false {
+                visibility: hidden;
+            }
+            .bookmarks-only .mdi--bookmark .true {
+                visibility: visible;
+            }
 
     .bookmarks-only .mdi--icon:not(.checked),
     .bookmarks-only .mdi--category,
@@ -235,10 +241,10 @@
         content: "No icons found";
     }
 </style>
-<body>
+<body class="{{bookmarks}}">
     <style class="mdi--style"></style>
     <h1 class="mdi--header"></h1>
-    /*icons*/
+    {{icons}}
     <div class="mdi--info"></div>
     <footer class="mdi--footer">
         <div class="mdi--search">
@@ -261,17 +267,11 @@
         </abbr>
     </footer>
     <script>    
-        /*script*/
+        {{script}}
 
         let style = document.querySelector(".mdi--style");            
         let containers = document.querySelectorAll(".mdi--container");
         let search = document.querySelector(".mdi--search--input");
-
-        if(state.bookmarks)
-        {
-            document.body.classList.add("bookmarks-only");
-            document.querySelector(".mdi--bookmark").classList.add("checked");
-        }
 
         let command =
         {
@@ -308,15 +308,14 @@
             if(e.target.classList.contains("mdi--icon--clone"))
             {
                 let i = e.target.parentNode.parentNode;
-                command.dispatch("copySource", [i.dataset.category, i.dataset.name]);
+                command.dispatch("copy", [i.dataset.category, i.dataset.name]);
             }
             if(e.target.classList.contains("mdi--bookmark"))
             {
                 document.body.classList.toggle("bookmarks-only");
-                e.target.classList.toggle("checked");
                 hideUnused();
                 
-                command.dispatch("changeBookmarksView", [Boolean(document.body.classList.contains("bookmarks-only"))]);
+                command.dispatch("bookmarks", [Boolean(document.body.classList.contains("bookmarks-only"))]);
             }
             if(e.target.classList.contains("mdi--update"))
             {

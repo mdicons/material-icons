@@ -37,21 +37,7 @@
         An error has occured
     </h1>
     <p>
-        The data could not be <span id="task">operation</span>.<br>
+        The data could not be {{operation}}.<br>
         Please <a href="command:materialIcons.dispatchEvent?%5B%22reload%22%5D">reload</a> the library and try again
     </p>
 </div>
-<script>
-    /*script*/
-
-    tasks =
-    {
-        DOWNLOADING: "downloaded",
-        EXTRACTING: "extracted"
-    }
-
-    if(state && state.info)
-    {
-        document.getElementById("task").innerHTML = tasks[state.info];
-    }
-</script>
