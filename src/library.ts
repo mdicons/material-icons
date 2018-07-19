@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as request from 'request';
 import * as yauzl from 'yauzl';
 import { METHODS } from 'http';
+import { domainMatch } from '../node_modules/@types/tough-cookie';
 
 interface IconData {
     [key: string]: {
@@ -76,7 +77,7 @@ export class Library implements vscode.TextDocumentContentProvider
 
     private _loadState()
     {
-        let data: {template?: string, style?: string, bookmarks?: Boolean} = 
+        let data: State = 
             fs.existsSync(`${this._path}/data/state.json`) ?
             JSON.parse(fs.readFileSync(`${this._path}/data/state.json`).toString()):
             {}; 
@@ -191,7 +192,7 @@ export class Library implements vscode.TextDocumentContentProvider
         return vscode.window.withProgress(
             {
                 location: vscode.ProgressLocation.Window,
-                title: "Downloading..."
+                title: ""
             }, 
             (progress: vscode.Progress<{message: string}>): Promise<{}> => 
             {   
@@ -252,7 +253,7 @@ export class Library implements vscode.TextDocumentContentProvider
         return vscode.window.withProgress(
             {
                 location: vscode.ProgressLocation.Window,
-                title: "Extracting..."
+                title: ""
             }, 
             (progress: vscode.Progress<{message: string}>): Promise<{}> =>
             {   
@@ -377,6 +378,7 @@ export class Library implements vscode.TextDocumentContentProvider
         {
             let insertions: vscode.Selection[] = [];
             let source = this._data[cat][icon];
+            let settings = vscode.workspace.getConfiguration('material-icons');
 
             this._activeEditor.edit(edit => 
             {
@@ -384,14 +386,31 @@ export class Library implements vscode.TextDocumentContentProvider
                 {
                     let counter = 0;
                     let text = this._activeEditor.document.getText(selection);
-                    
-                    let newText = text.replace(
-                        /(<svg[^>]*>\s*)[^]*?(\s*<\/svg>)/g, 
-                        (match, start, end) =>
-                        {
-                            counter++;
-                            return start + source + end;
-                        });
+                    let newText = "";
+
+                    if(settings.useFont)
+                    {
+                        let safeClass = settings.classList.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+
+                        newText = text.replace(
+                            new RegExp('(<i[^>]*class=(["\']?)(?:[^\\2]* )?'+safeClass+'(?: [^\\2]*)?\\2[^>]*>\\s*)[^]*?(\\s*<\\/i>)', "g"),
+                            (match, start, symbol, end) =>
+                            {
+                                console.log(match, start, symbol, end);
+                               counter++;
+                               return start + icon + end;
+                            });
+                    }
+                    else
+                    {
+                        newText = text.replace(
+                            /(<svg[^>]*>\s*)[^]*?(\s*<\/svg>)/g, 
+                            (match, start, end) =>
+                            {
+                                counter++;
+                                return start + source + end;
+                            });
+                    }
                     counter ?
                         edit.replace(selection, newText):
                         insertions.push(selection);
@@ -399,14 +418,14 @@ export class Library implements vscode.TextDocumentContentProvider
             });
             if(insertions.length)
             {
-                let settings = vscode.workspace.getConfiguration('material-icons');
                 this._activeEditor.insertSnippet(
                     new vscode.SnippetString(
-                        `<svg class="${settings.classList}" viewBox="0 0 24 24"${settings.includeXmlns ? ' xmlns="http://www.w3.org/2000/svg"' : ''}>\n\t${source}\n</svg>`),
+                        (settings.useFont ?
+                            `<i class="${settings.classList}">${icon}</i>` :
+                            `<svg class="${settings.classList}" viewBox="0 0 24 24"${settings.includeXmlns ? ' xmlns="http://www.w3.org/2000/svg"' : ''}>\n\t${source}\n</svg>`)),
                         insertions);
             }
         }
-        vscode.window.showTextDocument(this._activeEditor.document.uri);
     }
     public copyToClipboard(cat: string, icon: string)
     {
@@ -420,11 +439,13 @@ export class Library implements vscode.TextDocumentContentProvider
         {
             edit.replace(
                 this._activeEditor.selection, 
-                `<svg class="${settings.classList}" viewBox="0 0 24 24"${settings.includeXmlns ? ' xmlns="http://www.w3.org/2000/svg"' : ''}>\n\t${source}\n</svg>`
+                (settings.useFont ?
+                    `<i class="${settings.classList}">${icon}</i>`:
+                    `<svg class="${settings.classList}" viewBox="0 0 24 24"${settings.includeXmlns ? ' xmlns="http://www.w3.org/2000/svg"' : ''}>\n\t${source}\n</svg>`)
             );  
         });
         
-        vscode.window.showTextDocument(this._activeEditor.document.uri);
+        vscode.window.showTextDocument(this._activeEditor.document.uri, {viewColumn: this._activeEditor.viewColumn});
         vscode.commands.executeCommand('editor.action.clipboardCopyAction');
         vscode.commands.executeCommand('undo');
         vscode.window.showInformationMessage(`[ ${icon.replace(/_/g, " ")} ] - copied to clipboard`);

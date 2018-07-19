@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- Add snippet inserting a `<link>` to the icon font
+
+## [0.2.0] - 2018-07-19
+### Added
+- Option to use an material icons font instead of svgs
+### Fixed
+- Bug with switching to new editor after insertion
+
+## [0.1.1] - 2018-06-03
+- Quick fixes
 
 ## [0.1.0] - 2018-06-02 
 - Migrate to TypeScript

@@ -23,8 +23,11 @@ Extension is activated by running `imageIcons.showLibrary` command. You can eith
 ## Settings
 
 * `material-icons.classList`: Defines classes which svgs will have after insertion
+* `material-icons.useFont`: Use icon font (`<i class="material-icons">example</i>`) instead of svgs
 * `material-icons.includeXmlns`: Chooses whether to include the `xmlns` tag inside svgs
 
-## Relesase Notes `[0.1.0] - 2018-06-02 `
-- Migrate to TypeScript
-- Move loading bar from `ProgressLocation.Notification` to `ProgressLocation.Window` until the former starts working correctly
+## Relesase Notes `[0.2.0] - 2018-07-19`
+### Added
+- Option to use an material icons font instead of svgs
+### Fixed
+- Bug with switching to new editor after insertion

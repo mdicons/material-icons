@@ -2,7 +2,7 @@
     "name": "material-icons",
     "displayName": "Material Icons Library",
     "description": "Insert material icons straight into your code",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "license": "MIT",
     "publisher": "Archety",
     "icon": "images/icon.png",
@@ -31,6 +31,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Choose whether the xmlns attribute should be included"
+                },
+                "material-icons.useFont": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Use an icon font instead of the svgs"
                 }
             }
         },
