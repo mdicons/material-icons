@@ -24,7 +24,7 @@
             "properties": {
                 "material-icons.classList": {
                     "type": "string",
-                    "default": "material-icon",
+                    "default": "material-icons",
                     "description": "Defines classes of newly inserted svgs"
                 },
                 "material-icons.includeXmlns": {
